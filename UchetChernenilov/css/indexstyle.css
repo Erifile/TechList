@@ -4,6 +4,14 @@
     margin: 0;
     padding: 0;
 }
+
+/* Разрешаем браузеру анимировать ключевое слово auto (высоту) */
+html 
+{
+  interpolate-size: allow-keywords;
+}
+
+
 body
 {
     display: flex;
@@ -14,14 +22,43 @@ body
     background-color: rgb(93, 91, 88);
     color: white;
     gap: 10px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+
+    
+
 }
+details 
+{
+  overflow: hidden; /* Прячем вылезающий контент при анимации */
+}
+
+/* псевдоэлемент ::details-content находит всё содержимое <details>, 
+за исключением самого заголовка <summary> */
+
+/* content-visibility управляет тем, рендерит ли браузер контент.
+
+allow-discrete заставляет браузер не выключать отображение контента мгновенно, 
+а подождать 0.3 секунды, пока идет анимация высоты. */
+
+details::details-content 
+{
+  transition: height 0.4s ease-out, content-visibility 0.4s allow-discrete;
+  height: 0px;
+}
+
+/* Фиксируем высоту в открытом состоянии */
+details[open]::details-content 
+{
+  height: auto;
+}
+
 
 .header, .general, .subj-area, .roles
 {
     display: flex;
     flex-direction: column;
 }
-.header, .general, .subj-area, .roles, .data, .functions
+.header, .general, .data, .functions
 {
     align-self: center; /* по центру body */
     border-radius: 15px; 
@@ -43,18 +80,23 @@ body
     background-color: rgb(97, 97, 131);
     padding: 15px;
     font-size: x-large;
+    gap: 10px;
+}
+.general h2
+{
+    justify-self: center;
+    align-self: center;
 }
 
-.subj-area, .roles
+
+/* .subj-area, .roles
 {
-    width: 30vw;
-    height: 200px;
     justify-content: center;
-    align-items: center;
-    background-color: rgb(97, 97, 131);
+    /* align-content: center; */
+    /* background-color: rgb(97, 97, 131);
     padding: 15px;
-    font-size: x-large;
-}
+    font-size: x-large; */
+/* } */ 
 
 .data
 {
@@ -68,21 +110,81 @@ body
     font-size: x-large;
 }
 
-.functions
+
+.requirements
+{
+    background-color: rgb(97, 97, 131);
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    align-self: center;
+}
+.requirements h1
+{
+    text-align: center;
+}
+.reqWrap
 {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap; /* переносит контент (список) ниже при уменьш. размера блока */
-    width: 40vw;
-    height: auto;
-    justify-content: center;
-    background-color: rgb(97, 97, 131);
-    padding: 15px;
-    font-size: x-large;
-    gap: 30px;
+    width: 100%;
+    /* unfunc/func будут занимать только свою естественную высоту 
+    до этого func растягивал высоту unfunc до своей (align-items:stretch)
+    и анимация ломалась*/
+    align-items: flex-start; 
+    
 }
-.functions p
+
+.functionality, .unfunctionality
+{
+    overflow: clip;
+    width: 40vw;
+    
+    background-color: rgb(97, 97, 131);
+}
+
+.functionality::details-content, .unfunctionality::details-content 
+{
+    transition: height 0.4s ease-out, content-visibility 0.4s allow-discrete;
+    height: 0px;
+    /* Переносим всю флекс-логику и падинги внутрь скрытого контейнера,
+    т.к display: flex на <details> конфликтует с плавной анимацией*/
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap; 
+}
+.functionality[open]::details-content, .unfunctionality[open]::details-content 
+{
+  height: auto;
+}
+
+.functionality, details summary
+{
+    font-size: x-large;
+    align-self: center;
+}
+.unfunctionality summary
+{
+    font-size: x-large;
+    justify-self: center;
+}
+.functionality ul
+{
+    font-size: large;
+    list-style-type: none;
+    padding: 0px;
+}
+.functionality ul ul 
+{
+    list-style-type: circle;
+}
+.functionality p
 {
     justify-self: center;
+}
+
+.requirements
+{
+    
 }
 
