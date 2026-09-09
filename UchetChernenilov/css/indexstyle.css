@@ -145,17 +145,23 @@ details[open]::details-content
     
     background-color: rgb(97, 97, 131);
 }
-.functionality summary, .unfunctionality summary
+summary
 {
     list-style-type: none;
 }
-.functionality summary::before, .unfunctionality summary::before
+details summary::before
 {
-    content: "▶";
+    content: "▶ ";
     display: inline-block;
     transition: transform 0.3s ease;
 }
-.functionality[open] > summary::before, .unfunctionality[open] > summary::before
+
+/* берет всё внутри details КРОМЕ summary */
+details::details-content 
+{
+    transition: height 0.4s ease-out, content-visibility 0.4s allow-discrete;
+}
+details[open] > summary::before
 {
     transform: rotate(90deg);
 }
@@ -166,7 +172,6 @@ ul
 
 .functionality::details-content, .unfunctionality::details-content 
 {
-    transition: height 0.4s ease-out, content-visibility 0.4s allow-discrete;
     height: 0px;
     /* Переносим всю флекс-логику и падинги внутрь скрытого контейнера,
     т.к display: flex на <details> конфликтует с плавной анимацией*/
@@ -179,30 +184,23 @@ ul
 {
   height: auto;
 }
-.functionality summary
+.functionality > summary, .unfunctionality > summary
 {
     font-size: x-large;
     text-align: center;
-}
-
-.unfunctionality summary
-{
-    font-size: x-large;
-    text-align: center;
-}
-.functionality ul:first-of-type
-{
-    font-size: large;
-    list-style-type: none;
-}
-.functionality details ul
-{
-
-    list-style-type: disc;
 }
 .functionality p
 {
     justify-self: center;
+}
+
+.functionality > ul, .unfunctionality > ul
+{
+    list-style-type: none;
+}
+.functionality > ul details > ul, .unfunctionality > ul
+{
+    list-style-type: disc;
 }
 
 .user-story
