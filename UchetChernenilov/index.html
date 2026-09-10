@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        dialog
+        {
+            
+            background-color: rgb(114, 154, 154);
+            border-radius: 10px;
+        }
+        div
+        {
+            background-color: rgb(135, 174, 77);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <dialog id="modal">
+        <p>Модальное окно</p>
+        <button commandFor="modal" command="close">Закрыть</button>
+    </dialog>
+    <button commandFor="modal" command="show-modal">Показать окошко</button>
+
+    <button popovertarget="pop-window" popovertargetaction="show">Показать окошко</button>
+    <div id="pop-window" popover>
+        <p>Pop-up окно</p>
+        <button popovertarget="pop-window" popovertargetaction="hide">Закрыть</button>
+    </div>
+
+</body>
+</html>
